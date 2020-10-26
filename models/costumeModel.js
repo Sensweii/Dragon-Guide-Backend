@@ -14,8 +14,12 @@ const costumeSetSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'costumeStat'
     }]
-});
+},
+    {
+        collection: 'costumeSet'
+    }
+);
 
-const costumeModel = mongoose.model('costumeSet', costumeSetSchema);
+const costumeModel = mongoose.model('Costume', costumeSetSchema);
 
 export default costumeModel;

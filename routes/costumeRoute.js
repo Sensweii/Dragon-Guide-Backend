@@ -1,27 +1,27 @@
 import express from 'express';
 
-import costumeSet from '../models/costumeModel';
+import Costume from '../models/costumeModel';
 import { isAuth, isAdmin } from '../util';
 
 const router = express.Router();
 
 router.get('/list', async (req, res) =>{
-    const costumes = await costumeSet.find({});
+    const costumes = await Costume.find({});
     res.send(costumes);
 });
 
 router.get('/retrieve/:id', async (req, res) =>{
     const costumeID = req.params.id;
-    const costume = await costumeSet.findById(costumeID);
+    const costume = await Costume.findById(costumeID);
     if(costume){
         return res.send(costume);
     } else {
-        return res.status(404).send({message:'costumeSet not found.'});
+        return res.status(404).send({message:'Costume not found.'});
     }
 });
 
 router.post('/create', isAuth, isAdmin, async (req, res) =>{
-    const costume = new costumeSet({
+    const costume = new Costume({
         name: req.body.name,
         image: req.body.image,
         designer: req.body.designer,
@@ -39,7 +39,7 @@ router.post('/create', isAuth, isAdmin, async (req, res) =>{
 
 router.put('/update/:id', isAuth, isAdmin, async (req, res) =>{
     const costumeID = req.params.id;
-    const costume = await costumeSet.findById(costumeID);
+    const costume = await Costume.findById(costumeID);
     if(costume){
         costume.name = req.body.name;
         costume.image = req.body.image;
@@ -50,11 +50,11 @@ router.put('/update/:id', isAuth, isAdmin, async (req, res) =>{
         costume.description = req.body.description
         const updatedCostume = await costume.save()
         if(updatedCostume){
-            return res.status(200).send({ message:'costumeSet updated.', data:updatedCostume});
+            return res.status(200).send({ message:'Costume updated.', data:updatedCostume});
         }
         return res.status(500).send({ message:'Error in updating costume.'});
     } else {
-        const newCostume = new costumeSet({
+        const newCostume = new Costume({
             name: req.body.name,
             image: req.body.image,
             designer: req.body.designer,
@@ -73,11 +73,11 @@ router.put('/update/:id', isAuth, isAdmin, async (req, res) =>{
 
 router.delete('/delete/:id', isAuth, isAdmin, async (req, res) =>{
     const costumeID = req.params.id;
-    const costume = await costumeSet.findById(costumeID);
+    const costume = await Costume.findById(costumeID);
     if(costume){
         const deletedCostume = await costume.delete()
         if(deletedCostume){
-            return res.status(200).send({ message:'costumeSet deleted.', data:deletedCostume});
+            return res.status(200).send({ message:'Costume deleted.', data:deletedCostume});
         }
         return res.status(500).send({ message:'Error in deleting costume.'});
     }

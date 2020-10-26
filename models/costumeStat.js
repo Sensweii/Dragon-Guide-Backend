@@ -7,8 +7,12 @@ const costumeStatSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'costumeSet'
     }
-});
+},
+    {
+        collection: 'costumeStat'
+    }
+);
 
-const costumeStatModel = mongoose.model('costumeStat', costumeStatSchema);
+const costumeStatModel = mongoose.model('CostumeStat', costumeStatSchema);
 
 export default costumeStatModel;
