@@ -6,8 +6,35 @@ import { isAuth, isAdmin } from '../util';
 const router = express.Router();
 
 router.get('/list', async (req, res) =>{
+    const querySortOrder = req.query.sortOrder ? req.query.sortOrder : '';
+    function alphabeticalComparator(a, b){
+        return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
+    };
+    function ascendingPriceComparator(a, b){return (+a.price) - (+b.price)};
+    function descendingPriceComparator(a, b){return (+b.price) - (+a.price)};
+    function ratingComparator(a, b){return (+a.rating) - (+b.rating)};
+    function likesComparator(a, b){return (+a.numLikes) - (+b.mumLikes)};
+
+    const sortOrderSelector = (querySortOrder) =>{
+        switch(querySortOrder) {
+            case 'alphabetical':
+                return alphabeticalComparator;
+            case 'high_to_low_price':
+                return descendingPriceComparator;
+            case 'low_to_high_price':
+                return ascendingPriceComparator;
+            case 'rating':
+                return ratingComparator;
+            case 'likes':
+                return likesComparator;
+            default:
+                return undefined;
+        }
+    };
+    const sortOrder = sortOrderSelector(querySortOrder);
     const costumes = await Costume.find({});
-    res.send(costumes);
+    const sortedCostumes = costumes.sort(sortOrder)
+    res.send(sortedCostumes);
 });
 
 router.get('/retrieve/:id', async (req, res) =>{
