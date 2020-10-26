@@ -1,6 +1,6 @@
-import { model, Schema } from 'mongoose';
+import mongoose from 'mongoose';
 
-const costumeSetSchema = new Schema({
+const costumeSetSchema = new mongoose.Schema({
     name:{ type: String, required: true },
     image:{ type: String, required: true },
     designer:{ type: String, required: false },
@@ -11,11 +11,11 @@ const costumeSetSchema = new Schema({
     rating:{ type: Number, default: 0, required: true },
     numLikes:{ type: Number, default: 0, required: true },
     stats: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'costumeStat'
     }]
 });
 
-const costumeModel = model('costumeSet', costumeSetSchema);
+const costumeModel = mongoose.model('costumeSet', costumeSetSchema);
 
 export default costumeModel;
