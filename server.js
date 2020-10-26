@@ -17,6 +17,7 @@ mongoose.connect(mongodbUrl, {
 
 const app = express();
 
+app.options('*', cors());
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/api/users', userRoute);
