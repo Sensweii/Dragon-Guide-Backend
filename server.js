@@ -3,7 +3,6 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
-import config from 'config';
 import userRoute from './routes/userRoute';
 import costumeRoute from './routes/costumeRoute';
 
