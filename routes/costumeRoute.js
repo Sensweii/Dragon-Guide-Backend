@@ -6,6 +6,21 @@ import { isAuth, isAdmin } from '../util';
 const router = express.Router();
 
 router.get('/list', async (req, res) =>{
+
+    // Build Filtering Function
+    const queryFilterParam = req.query.filterParam ? req.query.filterParam : '';
+    function filterCostume(costume){
+        switch (queryFilterParam) {
+            case 'available':
+                return costume.available;
+            case 'unavailable':
+                return !costume.available;
+            default:
+                return undefined;
+        }
+    };
+
+    // Build Sorting Function
     const querySortOrder = req.query.sortOrder ? req.query.sortOrder : '';
     function alphabeticalComparator(a, b){
         return a.name.toLowerCase() > b.name.toLowerCase() ? 1 : -1
@@ -32,8 +47,11 @@ router.get('/list', async (req, res) =>{
         }
     };
     const sortOrder = sortOrderSelector(querySortOrder);
+
+    // Send Response
     const costumes = await Costume.find({});
-    const sortedCostumes = costumes.sort(sortOrder)
+    const filteredCostumes = costumes.filter(filterCostume);
+    const sortedCostumes = filteredCostumes.sort(sortOrder);
     res.send(sortedCostumes);
 });
 
