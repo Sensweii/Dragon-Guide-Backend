@@ -12,8 +12,10 @@ router.get('/list', async (req, res) =>{
     function filterCostume(costume){
         switch (queryFilterParam) {
             case 'available':
+                console.log(costume.available)
                 return costume.available;
             case 'unavailable':
+                console.log(costume.available)
                 return !costume.available;
             default:
                 return undefined;
