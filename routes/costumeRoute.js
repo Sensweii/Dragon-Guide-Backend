@@ -48,11 +48,22 @@ router.get('/list', async (req, res) =>{
     };
     const sortOrder = sortOrderSelector(querySortOrder);
 
-    // Send Response
+    // Build Response
     const costumes = await Costume.find({});
     const filteredCostumes = costumes.filter(filterCostume);
     const sortedCostumes = filteredCostumes.sort(sortOrder);
-    res.send(sortedCostumes);
+
+    // Paginate Response
+    const pageSize = 4;
+    var renderedCostumes = [];
+    sortedCostumes.forEach((item, index) =>{
+        var page_number = Math.floor(index / pageSize + 1);
+        item.page = page_number;
+        renderedCostumes.push(item);
+    });
+
+    // Send Response
+    res.send(renderedCostumes);
 });
 
 router.get('/retrieve/:id', async (req, res) =>{
