@@ -27,8 +27,8 @@ router.get('/list', async (req, res) =>{
     };
     function ascendingPriceComparator(a, b){return (+a.price) - (+b.price)};
     function descendingPriceComparator(a, b){return (+b.price) - (+a.price)};
-    function ratingComparator(a, b){return (+a.rating) - (+b.rating)};
-    function likesComparator(a, b){return (+a.numLikes) - (+b.numLikes)};
+    function ratingComparator(a, b){return (+b.rating) - (+a.rating)};
+    function likesComparator(a, b){return (+b.numLikes) - (+a.numLikes)};
 
     const sortOrderSelector = (querySortOrder) =>{
         switch(querySortOrder) {
