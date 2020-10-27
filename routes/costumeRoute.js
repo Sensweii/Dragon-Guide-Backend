@@ -50,7 +50,6 @@ router.get('/list', async (req, res) =>{
 
     // Send Response
     const costumes = await Costume.find({});
-    console.log(costumes)
     const filteredCostumes = costumes.filter(filterCostume);
     const sortedCostumes = filteredCostumes.sort(sortOrder);
     res.send(sortedCostumes);
