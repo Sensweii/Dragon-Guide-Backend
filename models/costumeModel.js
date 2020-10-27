@@ -10,7 +10,7 @@ const costumeSetSchema = new mongoose.Schema({
     description:{ type: String, required: false },
     rating:{ type: Number, default: 0, required: true },
     numLikes:{ type: Number, default: 0, required: true },
-    available: { type: Boolean, default: false, required: true },
+    available:{ type: Boolean, default: false, required: true },
     stats: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'costumeStat'
