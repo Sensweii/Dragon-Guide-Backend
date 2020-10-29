@@ -7,6 +7,16 @@ const router = express.Router();
 
 router.get('/list', async (req, res) =>{
 
+    // Build Keyword Search
+    const searchKeyword = req.query.searchParam
+        ? {
+            name: {
+            $regex: req.query.searchParam,
+            $options: 'i',
+            },
+        }
+        : {};
+
     // Build Filtering Function
     const queryFilterParam = req.query.filterParam ? req.query.filterParam : '';
     function filterCostume(costume){
@@ -49,7 +59,7 @@ router.get('/list', async (req, res) =>{
     const sortOrder = sortOrderSelector(querySortOrder);
 
     // Build Response
-    const costumes = await Costume.find({});
+    const costumes = await Costume.find({...searchKeyword});
     const filteredCostumes = costumes.filter(filterCostume);
     const sortedCostumes = filteredCostumes.sort(sortOrder);
 
